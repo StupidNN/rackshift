@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-#      - name: Create Release
+      #      - name: Create Release
       #        id: create_release
       #        uses: actions/create-release@v1
       #        env:
@@ -31,10 +31,10 @@ jobs:
       #            - Second Change
 
       - name: git-bash
-#        uses: pkg-src/github-action-git-bash@v1.1
+        #        uses: pkg-src/github-action-git-bash@v1.1
         run: |
           echo ${{github.ref}} > 1.txt
-          cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/' > 1.txt
+          cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'
 #            mv rackshift-installer rackshift`cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
 #            cd rackshift`cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
 #            rm -rf docker
