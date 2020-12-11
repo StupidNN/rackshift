@@ -1,7 +1,4 @@
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: build rackshift image with maven & node & upload release asset
+name: upload release asset
 
 on:
   push:
@@ -15,14 +12,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: git-bash
+      - name: Create Release File To Upload
+        id: create_release_file
+        env:
+          RELEASE_VERSION: ${{github.ref}}
         run: |
           git clone https://github.com/rackshift/rackshift-installer.git
           cd rackshift-installer
-          rm -rf docker
+          rm -rf docker .git
           cd ..
-          mv rackshift-installer rackshift-release
-          tar -czvf rackshift-release.tar.gz rackshift-release
+          chmod +x rackshift-installer/installer/install.sh
+          mv rackshift-installer rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
+          tar -czvf rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`.tar.gz rackshift-release`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
+          echo '::set-output name=VERSION::`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`'
 
       - name: Create Release
         id: create_release
@@ -46,17 +48,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./rackshift-release.tar.gz
-          asset_name: rackshift-release.tar.gz
+          asset_path: ./rackshift-releaseV${{ steps.create_release_file.outputs.VERSION }}.tar.gz
+          asset_name: rackshift-releaseV${{ steps.create_release_file.outputs.VERSION }}.tar.gz
           asset_content_type: application/zip
 
-      - name: Upload Quick Start Shell
+      - name: Upload Quick Start Script
         id: upload-release-quick-start-shell
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./rackshift-release/installer/quick_start.sh
+          asset_path: ./rackshift-releaseV${{ steps.create_release_file.outputs.VERSION }}/installer/quick_start.sh
           asset_name: quick_start.sh
           asset_content_type: application/text
