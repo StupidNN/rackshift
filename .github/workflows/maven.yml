@@ -34,6 +34,7 @@ jobs:
             ls
             git clone git@github.com:rackshift/rackshift-installer.git
             cat rackshift-installer/installer/install.sh
+            echo aaaa
 #            echo ${{github.ref}} > 1.txt
 #            cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/' > 1.txt
 #            mv rackshift-installer rackshift`cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
