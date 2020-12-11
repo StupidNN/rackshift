@@ -31,7 +31,7 @@ jobs:
       #            - Second Change
 
       - name: git-bash
-        uses: pkg-src/github-action-git-bash@v1.1
+#        uses: pkg-src/github-action-git-bash@v1.1
         run: |
           echo ${{github.ref}} > 1.txt
           cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/' > 1.txt
