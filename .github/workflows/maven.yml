@@ -23,10 +23,11 @@ jobs:
           cd ..
           echo $RELEASE_VERSION
           chmod +x rackshift-installer/installer/install.sh
-          mv rackshift-installer rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
-          tar -czvf rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`.tar.gz rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
           version=`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
-          echo ::set-output name=VERSION::$version
+          filename=rackshift-releaseV$version
+          mv rackshift-installer $filename
+          tar -czvf rackshift-releaseV$filename.tar.gz $filename
+          echo "::set-output name=VERSION::version"
 
       - name: Create Release
         id: create_release
