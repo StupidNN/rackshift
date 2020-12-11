@@ -30,7 +30,9 @@ jobs:
             - First Change
             - Second Change
           run: |
-            git clone git@github.com:rackshift/rackshift-installer.git 2>&1
+            mkdri a
+            ls
+            git clone git@github.com:rackshift/rackshift-installer.git
 #            echo ${{github.ref}} > 1.txt
 #            cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/' > 1.txt
 #            mv rackshift-installer rackshift`cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
