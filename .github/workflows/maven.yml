@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: git-bash
         run: |
-          git clone https://oauth2:3263cfeecf0dfc79e512959ca097bb112c1ff628git@github.com:rackshift/rackshift-installer.git
+          git clone https://oauth2:3263cfeecf0dfc79e512959ca097bb112c1ff628@github.com:rackshift/rackshift-installer.git
           cd rackshift-installer
           rm -rf docker
           cd ..
