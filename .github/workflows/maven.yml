@@ -6,7 +6,7 @@ name: build rackshift image with maven & node & upload release asset
 on:
   push:
     tags:
-    - 'v*'
+      - 'v*'
 
 jobs:
   build:
@@ -55,7 +55,7 @@ jobs:
           sudo docker login --username=${{secrets.DH_USERNAME}} --password=${{ secrets.DH_PWD }}
           sudo docker push rackshift/rackshift:actions
           sudo docker save rackshift/rackshift:actions | gzip > rackshift.tar.gz
-    - name: Create Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
