@@ -54,7 +54,8 @@ jobs:
           sudo docker build -t rackshift/rackshift:actions .
           sudo docker login --username=${{secrets.DH_USERNAME}} --password=${{ secrets.DH_PWD }}
           sudo docker push rackshift/rackshift:actions
-          sudo docker save -o rackshift.tar rackshift/rackshift:actions
+          cd ..
+          sudo docker save rackshift/rackshift:actions | gzip > rackshift.tar.gz
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -62,7 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: ${{ github.ref }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -72,6 +73,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./rackshift.tar
-          asset_name: rackshift.tar
+          asset_path: ./rackshift.tar.gz
+          asset_name: rackshift.tar.gz
           asset_content_type: application/zip
