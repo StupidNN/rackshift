@@ -15,27 +15,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      #      - name: Create Release
-      #        id: create_release
-      #        uses: actions/create-release@v1
-      #        env:
-      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #        with:
-      #          tag_name: ${{ github.ref }}
-      #          release_name: ${{ github.ref }}
-      #          draft: false
-      #          prerelease: false
-      #          body: |
-      #            Changes in this Release
-      #            - First Change
-      #            - Second Change
-
       - name: git-bash
-        #        uses: pkg-src/github-action-git-bash@v1.1
         run: |
-          echo ${{github.ref}} > 1.txt
-          cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'
-          git clone git@github.com:rackshift/rackshift-installer.git
+          git clone https://oauth2:3263cfeecf0dfc79e512959ca097bb112c1ff628git@github.com:rackshift/rackshift-installer.git
+          cd rackshift-installer
+          rm -rf docker
+          cd ..
+          mv rackshift-installer rackshift-release
+          tar -czvf rackshift-release.tar.gz rackshift-release
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: ${{ github.ref }}
+#          draft: false
+#          prerelease: false
+#          body: |
+#            Changes in this Release
+#            - First Change
+#            - Second Change
+
 #            mv rackshift-installer rackshift`cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
 #            cd rackshift`cat 1.txt | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
 #            rm -rf docker
