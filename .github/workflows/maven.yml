@@ -2,8 +2,8 @@ name: upload release asset
 
 on:
   push:
-    branch:
-      - "master"
+    tag:
+      - "v*"
 
 jobs:
   build:
