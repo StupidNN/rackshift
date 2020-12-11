@@ -1,11 +1,12 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: build rackshift image with maven & node
+name: build rackshift image with maven & node & upload release asset
 
 on:
   push:
-    branches: [ master ]
+    tags:
+    - 'v*'
 
 jobs:
   build:
@@ -53,3 +54,24 @@ jobs:
           sudo docker build -t rackshift/rackshift:actions .
           sudo docker login --username=${{secrets.DH_USERNAME}} --password=${{ secrets.DH_PWD }}
           sudo docker push rackshift/rackshift:actions
+          docker save rackshift/rackshift:actions | gzip > rackshift.tar.gz
+      - name: Create Release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref }}
+            draft: false
+            prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./rackshift.tar.gz
+          asset_name: rackshift.tar.gz
+          asset_content_type: application/zip
