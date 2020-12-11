@@ -22,8 +22,8 @@ jobs:
           rm -rf docker .git
           cd ..
           echo $RELEASE_VERSION
-#          chmod +x rackshift-installer/installer/install.sh
-#          mv rackshift-installer rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
+          chmod +x rackshift-installer/installer/install.sh
+          mv rackshift-installer rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
 #          tar -czvf rackshift-releaseV`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`.tar.gz rackshift-release`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
 #          echo '::set-output name=VERSION::`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`'
 #
