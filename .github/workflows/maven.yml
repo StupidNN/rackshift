@@ -27,7 +27,7 @@ jobs:
           filename=rackshift-release$version
           mv rackshift-installer $filename
           tar -czvf rackshift-release$filename.tar.gz $filename
-          core.setOutput('VERSION', 'V1.5.8');
+          echo 'echo ::set-output name=VERSION::$version'
 
       - name: Create Release
         id: create_release
