@@ -16,20 +16,20 @@ jobs:
         id: create_release_file
         env:
           RELEASE_VERSION: ${{github.ref}}
+        shell: bash
         run: |
           git clone https://github.com/rackshift/rackshift-installer.git
           cd rackshift-installer
           rm -rf docker .git
           cd ..
           echo $RELEASE_VERSION
-          echo JSON.stringify($RELEASE_VERSION)
           chmod +x rackshift-installer/installer/install.sh
           version=`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
           echo version:+++++++++ $version +++++++++
           filename=rackshift-releaseV$version
           mv rackshift-installer $filename
           tar -czvf rackshift-releaseV$filename.tar.gz $filename
-          core.setOutput('VERSION', version);
+          core.setOutput('VERSION', $version);
 
       - name: Create Release
         id: create_release
