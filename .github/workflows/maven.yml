@@ -26,7 +26,7 @@ jobs:
           filename=rackshift-release$version
           mv rackshift-installer $filename
           tar -czvf rackshift-release$filename.tar.gz $filename
-          echo 'echo ::set-output name=VERSION::${version}'
+          echo 'echo ::set-output name=VERSION::1.6.4'
 
       - name: Print OutPut
         id: print-out
