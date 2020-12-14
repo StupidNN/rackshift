@@ -24,6 +24,7 @@ jobs:
           echo $RELEASE_VERSION
           chmod +x rackshift-installer/installer/install.sh
           version=`$RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
+          echo version:+++++++++ $version +++++++++
           filename=rackshift-releaseV$version
           mv rackshift-installer $filename
           tar -czvf rackshift-releaseV$filename.tar.gz $filename
