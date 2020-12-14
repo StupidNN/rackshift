@@ -31,7 +31,7 @@ jobs:
       - name: Print OutPut
         id: print-out
         run: |
-          echo ${{steps.create_release_file.outputs.VERSION}}
+          echo ssssssss
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
