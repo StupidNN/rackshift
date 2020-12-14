@@ -16,7 +16,6 @@ jobs:
         id: create_release_file
         env:
           RELEASE_VERSION: ${{github.ref}}
-        shell: bash
         run: |
           git clone https://github.com/rackshift/rackshift-installer.git
           cd rackshift-installer
