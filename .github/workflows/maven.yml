@@ -27,7 +27,7 @@ jobs:
           filename=rackshift-releaseV$version
           mv rackshift-installer $filename
           tar -czvf rackshift-releaseV$filename.tar.gz $filename
-          echo "::set-output name=VERSION::$version"
+          echo "::set-output name=VERSION::$(echo $version)"
 
       - name: Create Release
         id: create_release
