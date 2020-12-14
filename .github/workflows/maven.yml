@@ -25,7 +25,7 @@ jobs:
           version=`echo $RELEASE_VERSION | tr 'a-z' 'A-Z' | tr -d 'REFS/TAGS/'`
           filename=rackshift-release$version
           mv rackshift-installer $filename
-          tar -czvf rackshift-release$filename.tar.gz $filename
+          tar -czvf $filename.tar.gz $filename
           echo "::set-output name=VERSION::$(echo $version)"
 
       - name: Print OutPut
